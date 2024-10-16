@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="primaryColor">#FF6F61</color> <!-- Naranja cálido, festivo -->
+    <color name="primaryDarkColor">#D84315</color> <!-- Variante más oscura de naranja -->
+    <color name="onPrimaryColor">#FFFFFF</color> <!-- Texto sobre fondo primario -->
+
+    <!-- Colores secundarios (acento) -->
+    <color name="secondaryColor">#FFA726</color> <!-- Naranja más suave -->
+    <color name="secondaryDarkColor">#F57C00</color> <!-- Variante más oscura del acento -->
+    <color name="onSecondaryColor">#FFFFFF</color> <!-- Texto sobre fondo secundario -->
+
+    <!-- Colores de fondo y superficies -->
+    <color name="backgroundColor">#FFF3E0</color> <!-- Fondo claro y cálido -->
+    <color name="surfaceColor">#FFFFFF</color> <!-- Superficie para tarjetas y diálogos -->
+    <color name="onSurfaceColor">#4E342E</color> <!-- Texto sobre superficies claras -->
+
+    <!-- Colores de texto -->
+    <color name="textPrimaryColor">#4E342E</color> <!-- Texto principal oscuro -->
+    <color name="textSecondaryColor">#757575</color> <!-- Texto secundario gris oscuro -->
+
+</resources>
