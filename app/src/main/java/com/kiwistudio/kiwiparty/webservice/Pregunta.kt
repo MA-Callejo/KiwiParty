@@ -8,6 +8,10 @@ data class Pregunta (
 )
 
 data class ApiResponse(
-    val status: String,
+    val status: Int,
     val preguntas: List<Pregunta>
+)
+data class ApiResponseValoracion(
+    val status: Int,
+    val valoracion: Int
 )

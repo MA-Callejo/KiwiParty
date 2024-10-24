@@ -33,12 +33,15 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -46,6 +49,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -59,8 +63,7 @@ import com.kiwistudio.kiwiparty.R
 
 
 @Composable
-fun MainMenu(navController: NavController) {
-    val viewModel: MainViewModel = viewModel()
+fun MainMenu(navController: NavController, viewModel: MainViewModel) {
     // Lista de modos de juego
     val gameModes = listOf(
         "Yo nunca" to R.drawable.mano, // Iconos representativos
@@ -71,13 +74,15 @@ fun MainMenu(navController: NavController) {
     )
     var modeSelected by remember { mutableIntStateOf(0) }
     var verDialog by remember { mutableStateOf(false) }
+    val stringList by viewModel.stringList.collectAsState(initial = emptyList())
     if(verDialog){
         PlayerDialog(gameModes[modeSelected].first, {verDialog = false}, {lista, adulto ->
+            verDialog = false
             viewModel.setJugadoresList(lista)
             viewModel.setAdultos(adulto)
             viewModel.setTipo(modeSelected)
             navController.navigate("newScreen")
-        })
+        }, stringList)
     }
     Column(
         modifier = Modifier
@@ -115,11 +120,15 @@ fun MainMenu(navController: NavController) {
 fun PlayerDialog(
     gameModeName: String, // Nombre del modo de juego
     onDismiss: () -> Unit, // Acción al cerrar el dialog
-    onStartGame: (List<String>, Boolean) -> Unit // Acción al empezar el juego con jugadores y +18
+    onStartGame: (List<String>, Boolean) -> Unit, // Acción al empezar el juego con jugadores y +18
+    listaGuardad: List<String>
 ) {
     var players = remember { mutableStateListOf<String>() }
     var newPlayerName by remember { mutableStateOf(TextFieldValue("")) } // Nuevo jugador
     var isAdultOnly by remember { mutableStateOf(false) } // Selector +18
+    LaunchedEffect(Unit) {
+        players = listaGuardad as SnapshotStateList<String>
+    }
 
     Dialog(
         onDismissRequest = onDismiss,
@@ -165,7 +174,7 @@ fun PlayerDialog(
                             },
                             modifier = Modifier.weight(1f),
                             singleLine = true,
-                            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+                            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done, capitalization = KeyboardCapitalization.Sentences),
                             keyboardActions = KeyboardActions.Default,
                             colors = TextFieldDefaults.textFieldColors(
                                 containerColor = Color.White,
@@ -199,7 +208,7 @@ fun PlayerDialog(
                             focusedIndicatorColor = Color(0xFFFF6F61), // Color del borde cuando está en foco
                             unfocusedIndicatorColor = Color.Transparent
                         ),
-                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done, capitalization = KeyboardCapitalization.Sentences),
                         keyboardActions = KeyboardActions(
                             onDone = {
                                 if (newPlayerName.text.isNotEmpty()) {
@@ -245,7 +254,7 @@ fun PlayerDialog(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Solo mayores de 18",
+                        text = "Param menores de 18",
                         fontSize = 18.sp,
                         color = Color(0xFF4E342E)
                     )

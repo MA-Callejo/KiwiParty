@@ -96,16 +96,17 @@ class MainActivity : AppCompatActivity() {
 fun MainScreen() {
 
     val navController = rememberNavController()
+    val mainViewModel: MainViewModel = viewModel()
     NavHost(navController = navController, startDestination = "mainMenu") {
 
         // Ruta principal (Main Menu)
         composable("mainMenu") {
-            MainMenu(navController)
+            MainMenu(navController, mainViewModel)
         }
 
         // Nueva pantalla a la que quieres navegar
         composable("newScreen") {
-            Game(navController)
+            Game(navController, mainViewModel)
             //NewScreen(players, rounds, isAdultOnly, navController)
         }
     }
