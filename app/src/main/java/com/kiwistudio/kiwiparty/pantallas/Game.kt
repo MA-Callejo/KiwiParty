@@ -79,6 +79,7 @@ fun Game(navController: NavController, viewModel: MainViewModel) {
     var preguntaIndex by remember { mutableIntStateOf(0) }
     val porcentajes by viewModel.porcentajes.observeAsState(Pair(0, 0))
     val preguntas by viewModel.preguntas.observeAsState(emptyList())
+    var nombreJugador by remember { mutableStateOf(viewModel.getRandomPlayer()) }
     LaunchedEffect(Unit) {
         viewModel.getPreguntas()
     }
@@ -112,6 +113,7 @@ fun Game(navController: NavController, viewModel: MainViewModel) {
                 }
             ) { targetPregunta ->
                 PreguntaCard(targetPregunta, onNextClick =  { valor ->
+                    nombreJugador = viewModel.getRandomPlayer()
                     if (preguntaIndex + 1 < preguntas.size) {
                         preguntaIndex += 1
                     } else {
@@ -120,14 +122,15 @@ fun Game(navController: NavController, viewModel: MainViewModel) {
                     }
                 }, onValorar = { valor -> viewModel.evaluar(preguntaActual.id, valor)},
                     porcentaje1 = porcentajes.first,
-                    porcentaje2 = porcentajes.second)
+                    porcentaje2 = porcentajes.second,
+                    nombreJugador = nombreJugador)
             }
         }
     }
 }
 
 @Composable
-fun PreguntaCard(pregunta: Pregunta, onNextClick: (valor: Int?) -> Unit, onValorar: (valor: Int) -> Unit, porcentaje1: Int, porcentaje2: Int) {
+fun PreguntaCard(pregunta: Pregunta, onNextClick: (valor: Int?) -> Unit, onValorar: (valor: Int) -> Unit, porcentaje1: Int, porcentaje2: Int, nombreJugador: String) {
     var valoracion: Int? by remember { mutableStateOf(null) }
 
     Box(
@@ -162,7 +165,20 @@ fun PreguntaCard(pregunta: Pregunta, onNextClick: (valor: Int?) -> Unit, onValor
                             }
                         }
                         2 -> {
-                            FlippingCardsRow(pregunta.texto1, pregunta.texto2 ?: "")
+                            Column(
+                                modifier = Modifier.weight(1f),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Text(
+                                    text = nombreJugador,
+                                    fontSize = 24.sp,
+                                    color = Color(0xFF9D2209),
+                                    modifier = Modifier.padding(bottom = 16.dp),
+                                    textAlign = TextAlign.Center
+                                )
+                                FlippingCardsRow(pregunta.texto1, pregunta.texto2 ?: "")
+                            }
                         }
                         3 -> {
                             FlippingCardsPercentRow(pregunta.texto1, pregunta.texto2 ?: "", porcentaje1, porcentaje2, {valor -> onValorar(valor)})
@@ -366,5 +382,5 @@ fun FlippingCardsPercent(texto: String, porcentaje: Int, fliped: Boolean, onClic
 @Preview
 @Composable
 fun PreguntaCardPreview(){
-    PreguntaCard(Pregunta(id = 1, texto1 = "A que no", texto2 = "No lo se", tipo = 2), onNextClick = { }, onValorar = {}, porcentaje2 = 0, porcentaje1 = 0)
+    //PreguntaCard(Pregunta(id = 1, texto1 = "A que no", texto2 = "No lo se", tipo = 2), onNextClick = { }, onValorar = {}, porcentaje2 = 0, porcentaje1 = 0)
 }

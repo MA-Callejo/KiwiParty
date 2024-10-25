@@ -1,9 +1,11 @@
 package com.kiwistudio.kiwiparty.pantallas
 
+import SettingsRepository
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -46,6 +48,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -74,44 +77,63 @@ fun MainMenu(navController: NavController, viewModel: MainViewModel) {
     )
     var modeSelected by remember { mutableIntStateOf(0) }
     var verDialog by remember { mutableStateOf(false) }
-    val stringList by viewModel.stringList.collectAsState(initial = emptyList())
+    val context = LocalContext.current
+    val repository = remember { SettingsRepository(context) } // Inicializar el repositorio con el contexto
+    var stringList by remember { mutableStateOf<List<String>>(emptyList()) }
+    LaunchedEffect(Unit) {
+        stringList = repository.getStringList() // Carga la lista desde el repositorio
+    }
     if(verDialog){
         PlayerDialog(gameModes[modeSelected].first, {verDialog = false}, {lista, adulto ->
             verDialog = false
+            repository.saveStringList(lista)
             viewModel.setJugadoresList(lista)
             viewModel.setAdultos(adulto)
             viewModel.setTipo(modeSelected)
             navController.navigate("newScreen")
         }, stringList)
     }
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFFFECB3)) // Color cálido de fondo
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .background(Color(0xFFFFECB3)) // Color de fondo
     ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
-        Spacer(modifier = Modifier.height(32.dp))
-        // Nombre de la app (simulando un logo)
-        Text(
-            text = "Kiwi Party",
-            modifier = Modifier.padding(16.dp),
-            color = Color(0xFFD84315), // Color principal de los títulos
-            fontSize = 36.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
-        )
+            Spacer(modifier = Modifier.height(32.dp))
+            // Nombre de la app (simulando un logo)
+            Text(
+                text = "Kiwi Party",
+                modifier = Modifier.padding(16.dp),
+                color = Color(0xFFD84315), // Color principal de los títulos
+                fontSize = 36.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        gameModes.forEachIndexed { index, (name, icon) ->
-            GameModeCard(name, icon, {
-                modeSelected = index
-                verDialog = true
-            })
             Spacer(modifier = Modifier.height(16.dp))
+
+            gameModes.forEachIndexed { index, (name, icon) ->
+                GameModeCard(name, icon, {
+                    modeSelected = index
+                    verDialog = true
+                })
+                Spacer(modifier = Modifier.height(16.dp))
+            }
         }
+        Text(
+            text = "v1.0",
+            fontSize = 12.sp,
+            color = Color.Gray,
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(20.dp) // Añadir un pequeño padding desde los bordes
+        )
     }
 }
 
@@ -127,7 +149,8 @@ fun PlayerDialog(
     var newPlayerName by remember { mutableStateOf(TextFieldValue("")) } // Nuevo jugador
     var isAdultOnly by remember { mutableStateOf(false) } // Selector +18
     LaunchedEffect(Unit) {
-        players = listaGuardad as SnapshotStateList<String>
+        players.clear()
+        players.addAll(listaGuardad)
     }
 
     Dialog(
@@ -254,7 +277,7 @@ fun PlayerDialog(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Param menores de 18",
+                        text = "Para menores de 18",
                         fontSize = 18.sp,
                         color = Color(0xFF4E342E)
                     )

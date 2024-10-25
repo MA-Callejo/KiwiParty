@@ -11,26 +11,17 @@ val Context.dataStore by preferencesDataStore(name = "settings")
 
 class SettingsRepository(private val context: Context) {
 
-    // Definir la clave para guardar la lista de strings
-    private val STRING_LIST_KEY = stringPreferencesKey("string_list")
+    private val preferences = context.getSharedPreferences("settings_prefs", Context.MODE_PRIVATE)
 
-    // Guardar la lista de strings
-    suspend fun saveStringList(stringList: List<String>) {
-        context.dataStore.edit { preferences ->
-            // Convertir la lista en un string con un delimitador (por ejemplo, usar JSON o una simple concatenación)
-            preferences[STRING_LIST_KEY] = stringList.joinToString(",") // Almacena la lista separada por comas
-        }
+    // Obtener la lista de strings desde SharedPreferences
+    fun getStringList(): List<String> {
+        val serializedList = preferences.getString("string_list", null)
+        return serializedList?.split(",") ?: emptyList()
     }
 
-    // Recuperar la lista de strings
-    val stringListFlow: Flow<List<String>> = context.dataStore.data
-        .map { preferences ->
-            // Recuperar la cadena y dividirla de nuevo en una lista
-            val storedString = preferences[STRING_LIST_KEY] ?: ""
-            if (storedString.isNotEmpty()) {
-                storedString.split(",") // Divide el string de vuelta en una lista
-            } else {
-                emptyList()
-            }
-        }
+    // Guardar la lista de strings en SharedPreferences
+    fun saveStringList(list: List<String>) {
+        val serializedList = list.joinToString(",") // Convierte la lista a una sola cadena
+        preferences.edit().putString("string_list", serializedList).apply()
+    }
 }

@@ -21,11 +21,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import kotlin.random.Random
 
-class MainViewModel(private val repository: SettingsRepository) : ViewModel() {
-
+class MainViewModel : ViewModel() {
     var jugadores: List<String> = listOf()
-    val stringList: Flow<List<String>> = repository.stringListFlow
     var isOnlyAdult = false
     var modeSelected = 1
     private var preguntasval = mutableListOf<Pregunta>()
@@ -46,20 +45,21 @@ class MainViewModel(private val repository: SettingsRepository) : ViewModel() {
         .build()
     val service: InterfazApi = retrofit.create(InterfazApi::class.java)
 
+    fun getRandomPlayer(): String{
+        val res = if(jugadores.isNotEmpty()) {
+            val randIndex = Random.nextInt(0, jugadores.size)
+            jugadores[randIndex]
+        } else ""
+        return res
+    }
     fun setJugadoresList(lista: List<String>){
         jugadores = lista
-        saveStringList(jugadores)
     }
     fun setAdultos(adulto: Boolean){
         isOnlyAdult = adulto
     }
     fun setTipo(tipo: Int){
         modeSelected = tipo
-    }
-    fun saveStringList(stringList: List<String>) {
-        viewModelScope.launch {
-            repository.saveStringList(stringList)
-        }
     }
     fun evaluar(id: Int, valoracion: Int) {
         CoroutineScope(Dispatchers.IO).launch {
