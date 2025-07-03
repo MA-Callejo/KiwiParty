@@ -1,6 +1,8 @@
 package com.kiwistudio.kiwiparty.pantallas
 
 import SettingsRepository
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -55,6 +57,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -124,6 +127,24 @@ fun MainMenu(navController: NavController, viewModel: MainViewModel) {
                     verDialog = true
                 })
                 Spacer(modifier = Modifier.height(16.dp))
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Row(){
+                Text(fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    text = "¿Quieres ver tus propias preguntas en la app?")
+                Text(
+                    text = "Colabora",
+                    textDecoration = TextDecoration.Underline,
+                    modifier = Modifier.clickable {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://kiwiprojectstudio.com/party/index.php"))
+                        context.startActivity(intent)
+                    },
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
             }
         }
         Text(
