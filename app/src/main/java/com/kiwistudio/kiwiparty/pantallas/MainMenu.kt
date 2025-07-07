@@ -3,6 +3,7 @@ package com.kiwistudio.kiwiparty.pantallas
 import SettingsRepository
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -52,6 +53,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -66,17 +68,18 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.kiwistudio.kiwiparty.MainViewModel
 import com.kiwistudio.kiwiparty.R
+import com.kiwistudio.kiwiparty.BuildConfig
 
 
 @Composable
 fun MainMenu(navController: NavController, viewModel: MainViewModel) {
     // Lista de modos de juego
     val gameModes = listOf(
-        "Yo nunca" to R.drawable.mano, // Iconos representativos
-        "Verdad o reto" to R.drawable.opciones,
-        "¿Que preferirías?" to R.drawable.decision,
-        "Desafíos" to R.drawable.objetivo,
-        "Coctel" to R.drawable.tostada,
+        stringResource(R.string.yo_nunca) to R.drawable.mano, // Iconos representativos
+        stringResource(R.string.verdad_o_reto) to R.drawable.opciones,
+        stringResource(R.string.que_preferir_as) to R.drawable.decision,
+        stringResource(R.string.desaf_os) to R.drawable.objetivo,
+        stringResource(R.string.coctel) to R.drawable.tostada,
     )
     var modeSelected by remember { mutableIntStateOf(0) }
     var verDialog by remember { mutableStateOf(false) }
@@ -129,26 +132,32 @@ fun MainMenu(navController: NavController, viewModel: MainViewModel) {
                 Spacer(modifier = Modifier.height(16.dp))
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Row(){
-                Text(fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center,
-                    text = "¿Quieres ver tus propias preguntas en la app?")
-                Text(
-                    text = "Colabora",
-                    textDecoration = TextDecoration.Underline,
-                    modifier = Modifier.clickable {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://kiwiprojectstudio.com/party/index.php"))
+            Text(fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(R.string.quieres_ver_tus_propias_preguntas_en_la_app)
+            )
+            Text(
+                text = stringResource(R.string.colabora),
+                textDecoration = TextDecoration.Underline,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        val intent = Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://kiwiprojectstudio.com/party/index.php")
+                        )
                         context.startActivity(intent)
                     },
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
-                )
-            }
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                color = Color.Blue
+            )
         }
         Text(
-            text = "v1.0",
+            text = BuildConfig.VERSION_NAME,
             fontSize = 12.sp,
             color = Color.Gray,
             modifier = Modifier
@@ -230,7 +239,7 @@ fun PlayerDialog(
                         IconButton(onClick = { players.removeAt(index) }) {
                             Icon(
                                 imageVector = Icons.Default.Delete,
-                                contentDescription = "Eliminar jugador",
+                                contentDescription = stringResource(R.string.eliminar_jugador),
                                 tint = Color(0xFFD84315) // Color del ícono de eliminar
                             )
                         }
@@ -246,7 +255,7 @@ fun PlayerDialog(
                         value = newPlayerName,
                         onValueChange = { newPlayerName = it },
                         modifier = Modifier.weight(1f),
-                        placeholder = { Text("Nuevo jugador") },
+                        placeholder = { Text(stringResource(R.string.nuevo_jugador)) },
                         colors = TextFieldDefaults.textFieldColors(
                             containerColor = Color.White,
                             focusedIndicatorColor = Color(0xFFFF6F61), // Color del borde cuando está en foco
@@ -275,7 +284,7 @@ fun PlayerDialog(
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF6F61))
                     ) {
-                        Text(text = "Añadir", color = Color.White)
+                        Text(text = stringResource(R.string.a_adir), color = Color.White)
                     }
                 }
 
@@ -298,7 +307,7 @@ fun PlayerDialog(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Para menores de 18",
+                        text = stringResource(R.string.para_menores_de_18),
                         fontSize = 18.sp,
                         color = Color(0xFF4E342E)
                     )
@@ -312,7 +321,7 @@ fun PlayerDialog(
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF6F61)),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(text = "Empezar partida", color = Color.White, fontSize = 18.sp)
+                    Text(text = stringResource(R.string.empezar_partida), color = Color.White, fontSize = 18.sp)
                 }
             }
         }

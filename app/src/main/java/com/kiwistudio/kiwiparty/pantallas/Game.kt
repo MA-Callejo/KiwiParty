@@ -58,6 +58,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -71,6 +72,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.kiwistudio.kiwiparty.MainViewModel
+import com.kiwistudio.kiwiparty.R
 import com.kiwistudio.kiwiparty.webservice.Pregunta
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -92,10 +94,10 @@ fun Game(navController: NavController, viewModel: MainViewModel) {
         ) {
             Text(
                 text = when (preguntaActual.tipo) {
-                    1 -> "Yo nunca..."
-                    2 -> "Verdad o reto"
-                    3 -> "¿Que prefieres?"
-                    4 -> "Desafío"
+                    1 -> stringResource(R.string.yo_nunca)
+                    2 -> stringResource(R.string.verdad_o_reto)
+                    3 -> stringResource(R.string.que_preferir_as)
+                    4 -> stringResource(R.string.desaf_os)
                     else -> "???"
                 },
                 fontSize = 42.sp,
@@ -193,7 +195,7 @@ fun PreguntaCard(pregunta: Pregunta, onNextClick: (valor: Int?) -> Unit, onValor
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF6F61)),
                     shape = RoundedCornerShape(50)
                 ) {
-                    Text(text = "Siguiente pregunta", color = Color.White)
+                    Text(text = stringResource(R.string.siguiente_pregunta), color = Color.White)
                 }
             }
         }
@@ -279,7 +281,7 @@ fun FlippingCard(texto: String, pulsable: Boolean, verdad: Boolean, isSelected: 
         ) {
             if (frontVisible) {
                 Text(
-                    text = if (verdad) "Verdad" else "Reto",
+                    text = if (verdad) stringResource(R.string.verdad) else stringResource(R.string.reto),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,

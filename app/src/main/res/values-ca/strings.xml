@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KiwiParty</string>
+    <string name="quieres_ver_tus_propias_preguntas_en_la_app">Vols veure les teves pròpies preguntes a l\'app?</string>
+    <string name="colabora">Col·labora</string>
+    <string name="eliminar_jugador">Eliminar jugador</string>
+    <string name="nuevo_jugador">Nou jugador</string>
+    <string name="a_adir">Afegir</string>
+    <string name="para_menores_de_18">Per a menors de 18</string>
+    <string name="empezar_partida">Començar partida</string>
+    <string name="yo_nunca">Jo mai...</string>
+    <string name="verdad_o_reto">Veritat o atreviment</string>
+    <string name="que_preferir_as">Què preferiries?</string>
+    <string name="desaf_os">Desafiaments</string>
+    <string name="coctel">Còctel</string>
+    <string name="siguiente_pregunta">Següent pregunta</string>
+    <string name="verdad">Veritat</string>
+    <string name="reto">Atreviment</string>
+</resources>

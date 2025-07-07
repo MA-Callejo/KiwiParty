@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KiwiParty</string>
+    <string name="quieres_ver_tus_propias_preguntas_en_la_app">Want to see your own questions in the app?</string>
+    <string name="eliminar_jugador">Delete player</string>
+    <string name="nuevo_jugador">New player</string>
+    <string name="colabora">Collaborate</string>
+    <string name="a_adir">Add</string>
+    <string name="para_menores_de_18">For those under 18</string>
+    <string name="empezar_partida">Start game</string>
+    <string name="yo_nunca">I never...</string>
+    <string name="verdad_o_reto">Truth or dare</string>
+    <string name="que_preferir_as">What would you prefer?</string>
+    <string name="desaf_os">Challenges</string>
+    <string name="coctel">Cocktail</string>
+    <string name="siguiente_pregunta">Next question</string>
+    <string name="verdad">Truth</string>
+    <string name="reto">Dare</string>
+</resources>
