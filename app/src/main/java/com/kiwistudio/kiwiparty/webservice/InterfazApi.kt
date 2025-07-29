@@ -3,9 +3,9 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface InterfazApi {
-    @GET("party/ws/getpreguntas.php")
+    @GET("ws/party/getpreguntas.php")
     suspend fun getPreguntas(@Query("tipo") tipo: Int, @Query("adulto") adulto: Int, @Query("jugadores") jugadores: Int): ApiResponse
 
-    @GET("party/ws/puntuar.php")
+    @GET("ws/party/puntuar.php")
     suspend fun getPreguntas(@Query("id") id: Int, @Query("valoracion") valoracion: Int): ApiResponseValoracion
 }
