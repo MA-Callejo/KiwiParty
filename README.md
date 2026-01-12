@@ -47,7 +47,7 @@ Este repositorio sirve tanto como **producto funcional** como **registro del pro
 
 ### Requisitos
 - Conexión a internet
-- Android 10+
+- Android 11+
 
 ### Instalación
 - Desde la PlayStore de Google
