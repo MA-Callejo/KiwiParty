@@ -37,6 +37,12 @@ Este repositorio sirve tanto como **producto funcional** como **registro del pro
 
 ---
 
+## 💬 Idiomas
+
+- Español
+
+---
+
 ## 📸 Capturas / Demo
 
 
