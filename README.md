@@ -1,6 +1,6 @@
 # 🥝 KiwiParty
 
-Tipico juego de fiesta. Incluye juegos como "¿Que preferirías?", "Verdad o reto"...
+Típico juego de fiesta. Incluye juegos como "¿Que preferirías?", "Verdad o reto"...
 
 ---
 
