@@ -42,10 +42,17 @@ Este repositorio sirve tanto como **producto funcional** como **registro del pro
 ## 💬 Idiomas
 
 - Español
+- Valencià
+- English
 
 ---
 
 ## 📸 Capturas / Demo
+![Screenshot_2026-01-22-15-00-09-308_com kiwistudio kiwiparty](https://github.com/user-attachments/assets/98436428-19f1-4f86-807b-c87042b4b0de)
+![Screenshot_2026-01-22-15-00-29-297_com kiwistudio kiwiparty](https://github.com/user-attachments/assets/f26357a0-a9fa-441d-a60a-43f745c9beb7)
+![Screenshot_2026-01-22-15-00-32-091_com kiwistudio kiwiparty](https://github.com/user-attachments/assets/2ad3ca5c-df78-44ae-8185-3a292c4c6f49)
+![Screenshot_2026-02-04-10-10-30-446_com kiwistudio kiwiparty](https://github.com/user-attachments/assets/3fa64ff8-5daf-4a31-9d22-9fdaa526c90f)
+![Screenshot_2026-02-04-10-11-00-396_com kiwistudio kiwiparty](https://github.com/user-attachments/assets/77d13d1c-c1dc-4b23-86da-28bbcbdacc21)
 
 
 
